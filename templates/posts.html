@@ -1,0 +1,55 @@
+{% extends "base.html" %} {% block content %}{% load static %}
+
+<section class="content">
+    <section class="post_form">
+        <form action="/" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Name" required/>
+            <textarea name="body" placeholder="Express Yourself" required></textarea>
+            <input class="form-control form-control-sm" name="pictures" type="file"/>
+            <input type="submit" value="Post"/>
+        </form>
+    </section>
+    <section class="posts">
+        {% for post in posts %}
+        <li>
+        <img class="menu_icon js-menu-icon" src="{% static 'img/menu.png' %}" alt="b" />
+        <div class="menu">
+            <a href="/delete/{{ post.id }}">DELETE</a>
+            <a href="/edit/{{ post.id }}">Edit</a>
+        </div>
+        <div class="logo">
+            <img src="{% static 'img/plane.png' %}" alt="">
+        </div>
+        <div class="name_body">
+        <div class="name">{{ post.name }} <br></div>
+        <div class="datetime">{{ post.created_at }} <br></div>
+        <p>{{ post.body }}</p><br/>
+   
+        <img src="{{post.pictures.url}}" alt="" style="width:200px; height: 200px;"/>
+        <div class="icon_list">
+            <div class="like js-like">
+                <a href="/likes/{{post.id}}"><img src="static/img/heart-lock.png" alt="x"></a>
+            </div>
+            <div class="like-count js-like-count">{{post.likes}}</div>
+        </div>
+        
+        </div>
+        </li>
+        {% endfor %}
+
+
+    </section>
+    <input type="hidden" name="csrfmiddlewaretoken" value="n4NC9ZZin1ON0ZUDTeFkPVYIaedUunVkgJJ6O0UoRYhPu29sS6yo11ApQShYQRxZ">
+    <!-- <script>
+        const JS_CSRFTOKEN = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        const JS_ICON_HEART_GRAY = 'static/img/lock';
+        const JS_ICON_HEART_BLUE = 8734;
+    </script> -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="{% static 'js/posts.js' %}"></script>
+    <!-- <script src="/static/js/like.js?v=1"></script> -->
+</section>
+
+
+{% endblock %}

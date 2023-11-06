@@ -1,0 +1,28 @@
+{% extends "base.html" %} {% block content %}{% load static %}
+
+<section class="content">
+    <div class="logodiv">
+        <img src="{% static 'img/' %}" alt="" class="twitterlogo">
+        <h1>Edit</h1>
+    </div>
+    <section class="post_form">
+        <form action="/edit/{{post.id}}/" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Name" value="{{post.name}}"/>
+            <input type="text" name="body" value="{{ post.body }}">
+            <!-- <textarea name="body" placeholder="Express Yourself" required value="{{post.body}}"></textarea> -->
+           
+            {% if post.image.url %}
+            <img src="{{ post.pictures.url }}" alt="">
+            {% endif %}
+            <input class="form-control form-control-sm" name="pictures" type="file"/>
+            <input type="submit" value="Update"/>
+            <a href="/">Cancel</a>
+        </form>
+    </section>
+    
+
+    </section>
+
+
+{% endblock %}
